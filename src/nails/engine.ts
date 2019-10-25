@@ -163,10 +163,10 @@ export class RenderingEngine {
         for (let directive of directives) {
             directive = this.removePrefix(directive);
             if (directive in this.directives) {
-                this.directives['for'](element, this.getElementAttributeForDirective(element, directive), this.state)
-                var directives = this.getElementDirectives(element);
+                eval('this.directives.' + directive +'(element, this.getElementAttributeForDirective(element, directive), this.state');
+                let nDirectives = this.getElementDirectives(element);
                 if (add) {
-                    for (var dir of directives) {
+                    for (var dir of nDirectives) {
                         this.state.addActiveDirectiveElement(dir, element.getAttribute(dir), element)
                     }
                 }
@@ -244,7 +244,7 @@ export class RenderingEngine {
         interpolation = interpolation.trim();
         return interpolation;
     }
-    getInterpolationsFortextContent(text: string) {
+    getInterpolationsForTextContent(text: string) {
         var interpolations :string[] = [];
         if (typeof text === 'undefined' || text === null) return interpolations;
         //text may come in this format 'hi, this is {{test}} and this is {{abc}}'
@@ -287,7 +287,9 @@ export class RenderingEngine {
     }
     updateInterpolatedElement(ref: HTMLElement, originalText: string) {
         this.executeDirectivesOnElement(ref, false);
-        var interpolations = this.getInterpolationsFortextContent(originalText);
+        console.log(originalText)
+        var interpolations = this.getInterpolationsForTextContent(originalText);
+        console.log(interpolations)
         if (interpolations.length === 0) return;
         var interpolatedText = originalText;
         for (var interpolation of interpolations) {
@@ -302,6 +304,7 @@ export class RenderingEngine {
 
 
 
+        console.log('updating: ' + interpolatedText)
 
         ref.textContent = interpolatedText;
 
@@ -380,7 +383,7 @@ export class RenderingEngine {
             this.executeInerpolationsOnElement(<HTMLElement>child);
         }
 
-        var interpolations = this.getInterpolationsFortextContent(element.nodeValue);
+        var interpolations = this.getInterpolationsForTextContent(element.nodeValue);
 
         if (this.isTextNode(element)) {
             //Interpolation should only happen on a text node. Otherwise, DOM may be damaged. 

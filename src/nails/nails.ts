@@ -82,7 +82,7 @@ export class Nails {
             return;
         };
         for (var ref of refs) {
-            this.engine.updateInterpolatedElement(ref.element, ref.interpolation);
+            this.engine.updateInterpolatedElement(ref.element, ref.content);
             this.engine.executeDirectivesOnElement(ref.element, false);
         }
 

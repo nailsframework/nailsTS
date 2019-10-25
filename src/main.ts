@@ -28,7 +28,7 @@ let nails = new Nails({
         },
         onMounted(currentState: State) {
             currentState.data.headers = [{ 'Test': 'Value' }];
-            currentState.data.whoami = "plz"
+            currentState.data.whoami = 'pkz'
         },
     },
     components: [

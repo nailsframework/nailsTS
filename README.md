@@ -8,7 +8,7 @@ NailsFramework or short NailsJS is a new Javascript library.
 
 To see whats possible, take a look into the index.html.
 
-# Why should i use NailsJS?
+# Why should i use NailsTS?
 
 Nails has been created out of one reason. Frustration.
 Mostly every JS Framework doesn't really scale down for small size project, instead they are horribly 
