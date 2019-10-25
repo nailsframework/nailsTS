@@ -5,9 +5,8 @@
   "main": "main.js",
   "scripts": {
     "test": "webpack --config production.config.js",
-    "start": "webpack -p && webpack-dev-server",
+    "start": "webpack-dev-server",
     "build": "webpack --config production.config.js && cp *.js dist/ && cp *.html dist/ && rm -rf node_modules && find . -path ./dist -prune -o -type d  -exec cp -R {} dist/ \\;"
-    
   },
   "repository": {
     "type": "git",
@@ -24,12 +23,16 @@
     "babel-loader": "^8.0.6",
     "babel-polyfill": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.6.4",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.9.0"
   },
   "dependencies": {
+    "awesome-typescript-loader": "^5.2.1",
     "install": "^0.13.0",
-    "npm": "^6.12.0"
+    "npm": "^6.12.0",
+    "source-map-loader": "^0.2.4"
   }
 }
