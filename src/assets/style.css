@@ -1,0 +1,48 @@
+
+.image-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Oswald', sans-serif;
+
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    color: #ffffff;
+    background-color: rgb(75, 75, 75);
+    text-align:center;
+    height: 50px;	
+    line-height: 50px;
+    font-size: 23px;
+  }
+
+  link{
+      color: #555273;
+      text-align: center;
+      cursor: pointer;
+      width: 100%;
+      
+  }
+  a {
+    font-size: 30px;
+    text-decoration: none;
+    display: block;
+    text-align: center;  
+    animation-delay: 0.2s;
+
+  }
+.yield{
+    height: 400px;
+    width: 100%;
+    margin-left: 50px;
+    margin-right: 50px;
+}
