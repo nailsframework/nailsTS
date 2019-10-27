@@ -15,9 +15,10 @@ module.exports = {
 
   resolve: {
     extensions: [ '.js','.tsx', '.ts'],
+    
   },
   output: {
-    filename: 'src/app.js',
+    filename: 'app.js',
     path: path.resolve(__dirname, 'dist'),
   },
 };

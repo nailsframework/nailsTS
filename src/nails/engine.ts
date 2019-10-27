@@ -163,7 +163,7 @@ export class RenderingEngine {
         for (let directive of directives) {
             directive = this.removePrefix(directive);
             if (directive in this.directives) {
-                eval('this.directives.' + directive +'(element, this.getElementAttributeForDirective(element, directive), this.state');
+                eval('this.directives.' + directive +'(element, this.getElementAttributeForDirective(element, directive), this.state)');
                 let nDirectives = this.getElementDirectives(element);
                 if (add) {
                     for (var dir of nDirectives) {

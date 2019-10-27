@@ -1,8 +1,8 @@
 {
-  "name": "nailsjs",
-  "version": "1.0.0",
-  "description": "The JS Library in the NailsFramework toolset",
-  "main": "main.js",
+  "name": "@nailsframework/nailsts",
+  "version": "1.0.1",
+  "description": "The TS Library in the NailsFramework toolset",
+  "main": "nails.ts",
   "scripts": {
     "test": "webpack --config production.config.js",
     "start": "webpack-dev-server",

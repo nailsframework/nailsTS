@@ -46,7 +46,9 @@ export class ComponentEngine {
                 this.traverseElementAndExecuteDirectives(<HTMLElement>child)
             }
         }
+
         console.log('TRAV:' + element)
+        console.log(element)
         this.engine.executeDirectivesOnElement(element, true)
 
     }

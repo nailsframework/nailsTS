@@ -5,7 +5,7 @@ state: State
 selector: string
   constructor(state: State) {
     this.state = state;
-    this.selector = 'nailsNav'
+    this.selector = 'nailsnav'
   }
 
   render() {
@@ -17,7 +17,7 @@ selector: string
             <!-- Logo Image -->
             <img src="assets/logo.png" width="45" alt="" class="d-inline-block align-middle mr-2">
             <!-- Logo Text -->
-            <span class="text-uppercase font-weight-bold">{{WhoAmI}}</span>
+            <span class="text-uppercase font-weight-bold">{{ whoami }}</span>
           </a>
       
           <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>

@@ -3,7 +3,7 @@
       "target": "es6",
       "module": "commonjs",
       "outDir": "./tmp",
-      "declaration": false,
+      "declaration": true,
       "sourceMap": true,
       "strict": true,
       "noImplicitAny": true,
@@ -15,6 +15,6 @@
     },
    
     "include": [
-      "./src/**/*", "webpack.config.js"
+      "./**/*", "./srx/webpack.config.js"
     ]
   }
