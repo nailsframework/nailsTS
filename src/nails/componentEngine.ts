@@ -47,8 +47,6 @@ export class ComponentEngine {
             }
         }
 
-        console.log('TRAV:' + element)
-        console.log(element)
         this.engine.executeDirectivesOnElement(element, true)
 
     }
@@ -116,6 +114,7 @@ export class ComponentEngine {
                 element.innerHTML = componentHTML;
                 this.renderComponents();
             }
+        }else{
         }
     }
 

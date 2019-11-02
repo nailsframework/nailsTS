@@ -287,9 +287,7 @@ export class RenderingEngine {
     }
     updateInterpolatedElement(ref: HTMLElement, originalText: string) {
         this.executeDirectivesOnElement(ref, false);
-        console.log(originalText)
         var interpolations = this.getInterpolationsForTextContent(originalText);
-        console.log(interpolations)
         if (interpolations.length === 0) return;
         var interpolatedText = originalText;
         for (var interpolation of interpolations) {
@@ -304,7 +302,6 @@ export class RenderingEngine {
 
 
 
-        console.log('updating: ' + interpolatedText)
 
         ref.textContent = interpolatedText;
 

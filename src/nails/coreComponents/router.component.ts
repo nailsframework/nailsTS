@@ -19,7 +19,6 @@ export class Router {
                 return;
             }
 
-            if (typeof that.engine === 'undefined') return;
             that.hashRoute = window.location.hash.replace('#/', '');
 
             that.engine.recreateComponentsByName('yield'); // TODO: Find better way
@@ -36,10 +35,15 @@ export class Router {
         this.routings = routings;
     }
 
+    getHashRoute(){
+       return window.location.hash.replace('#/', '');
+    }
+
     getComponent() {
         if (typeof this.routings === 'undefined') return 'div';
         for (var route of this.routings) {
-            if (route.route === this.hashRoute) {
+            if (route.route === this.getHashRoute()) {
+
                 if (this.isFunction(route.guard)) {
                     if (route.guard(this)) {
                         var instance = new route.component(this.state);
