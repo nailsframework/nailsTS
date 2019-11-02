@@ -37,15 +37,6 @@ let nails = new Nails({
     routings: [{
         component: LoginComponent,
         route: 'login',
-    },
-    {
-        component: LoginComponent,
-        route: 'lappe',
-        guard: guard
-    },
-    {
-        component: ShowcaseComponent,
-        route: 'showcase',
     }],
     declarations: [
         Greeter
