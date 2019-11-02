@@ -1,6 +1,7 @@
 import { State } from "../nails/state";
+import { IComponent } from "../nails/interfaces/Component";
 
-export class ShowcaseComponent {
+export class ShowcaseComponent implements IComponent{
     state: State
     selector: string
 

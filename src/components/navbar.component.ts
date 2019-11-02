@@ -1,6 +1,7 @@
 import { State } from "../nails/state";
+import { IComponent } from "../nails/interfaces/Component";
 
-export class NavbarComponent {
+export class NavbarComponent implements IComponent {
 state: State
 selector: string
   constructor(state: State) {

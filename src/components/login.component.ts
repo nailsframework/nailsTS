@@ -1,7 +1,8 @@
 import { Greeter } from "../modules/injectme.module";
 import { State } from "../nails/state";
+import { IComponent } from "../nails/interfaces/Component";
 
-export class LoginComponent {
+export class LoginComponent implements IComponent {
   state: State;
   selector: string;
   i: number;
