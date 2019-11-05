@@ -4,11 +4,12 @@ import { State } from './state';
 import { ActiveElement } from './classes/ActiveElement';
 export class RenderingEngine {
 
-    state: State
-    directives: NailsDirectives
+    public state: State;
+    public directives: NailsDirectives;
 
     constructor(state: State) {
         if (typeof state === 'undefined' || state === null) {
+            // tslint:disable-next-line:no-console
             console.log("Engine was initialized without a state");
         }
         this.state = state;
@@ -16,11 +17,11 @@ export class RenderingEngine {
 
     }
 
-    indexDOM() {
+    public indexDOM() {
         if (typeof this.state.element !== 'undefined') {
             var element = null;
             if (this.state.element.startsWith('#')) {
-                var selector = this.state.element.substr(1);
+                const selector = this.state.element.substr(1);
                 element = document.getElementById(selector);
             } else {
                 element = document.getElementsByTagName(this.state.element);
@@ -43,15 +44,15 @@ export class RenderingEngine {
             }
 
 
-            //From now on, we need to loop through all elements
-            var activeElements = this.indexElement(<HTMLElement>element);
-            //Execute Directives
+            // From now on, we need to loop through all elements
+            const activeElements = this.indexElement(element as HTMLElement);
+            // Execute Directives
 
-            //TODO: Manage the activeElements here and not in interpolations
-            for (var el of activeElements) {
+            // TODO: Manage the activeElements here and not in interpolations
+            for (const el of activeElements) {
                 this.executeDirectivesOnElement(el, true);
             }
-            this.executeInerpolationsOnElement(<HTMLElement>element);
+            this.executeInerpolationsOnElement(element as HTMLElement);
         }
     }
 
@@ -125,7 +126,7 @@ export class RenderingEngine {
         if (typeof element === 'undefined') {
             return [];
         }
-        var directives : string[] = [];
+        var directives: string[] = [];
         for (var directive of this.directives.directives) {
             directive = this.prefixDiretive(directive);
             if ('hasAttribute' in element && element.hasAttribute(directive)) {
@@ -163,7 +164,7 @@ export class RenderingEngine {
         for (let directive of directives) {
             directive = this.removePrefix(directive);
             if (directive in this.directives) {
-                eval('this.directives.' + directive +'(element, this.getElementAttributeForDirective(element, directive), this.state)');
+                eval('this.directives.' + directive + '(element, this.getElementAttributeForDirective(element, directive), this.state)');
                 let nDirectives = this.getElementDirectives(element);
                 if (add) {
                     for (var dir of nDirectives) {
@@ -245,31 +246,32 @@ export class RenderingEngine {
         return interpolation;
     }
     getInterpolationsForTextContent(text: string) {
-        var interpolations :string[] = [];
-        if (typeof text === 'undefined' || text === null) return interpolations;
-        //text may come in this format 'hi, this is {{test}} and this is {{abc}}'
-        var matches = text.match(/{{(.?\s?\w?.?\w\s?)+}}/g); //TODO: Regex is not perfect. May start with .
-        if (matches === null) return [];
-        for (var match of matches) {
+        const interpolations: string[] = [];
+        if (typeof text === 'undefined' || text === null) { return interpolations; }
+        // text may come in this format 'hi, this is {{test}} and this is {{abc}}'
+        const matches = text.match(/{{(.?\s?\w?.?\w\s?)+}}/g); // TODO: Regex is not perfect. May start with .
+        if (matches === null) { return []; }
+        for (const match of matches) {
             interpolations.push(match);
         }
         return interpolations;
     }
-    getObjectReferenceByInterpolationName(interpolation:string) {
+    public getObjectReferenceByInterpolationName(interpolation: string) {
         interpolation = this.stripAndTrimInterpolation(interpolation);
-        return this.state.data[interpolation]; //Handle interpolations with . inside
+        return this.state.data[interpolation]; //H andle interpolations with . inside
     }
 
-    interpolateOnTextWithState(text:string, state:State) {
+    // tslint:disable-next-line:no-empty
+    public interpolateOnTextWithState(text: string, state: State) {
 
     }
-    getContentOfNodeIfTextNodeExists(node: Node) : string{
+    public getContentOfNodeIfTextNodeExists(node: Node): string {
         if (node.nodeType === 3) {
             return node.nodeValue;
         }
-        if (node.childNodes.length === 0) return null;
-        if (this.nodeHasTextNodeAsADirectChild(<HTMLElement>node)) {
-            for (var child of node.childNodes) {
+        if (node.childNodes.length === 0) { return null; }
+        if (this.nodeHasTextNodeAsADirectChild(node as HTMLElement)) {
+            for (const child of node.childNodes) {
                 if (this.getContentOfNodeIfTextNodeExists(child) !== null) {
                     return this.getContentOfNodeIfTextNodeExists(child);
                 }
@@ -277,7 +279,7 @@ export class RenderingEngine {
         }
     }
 
-    setContentOfTextNode(node: Node, value: string) {
+    public setContentOfTextNode(node: Node, value: string) {
         if (node.nodeType !== 3) {
             console.error('setContentOfTextNode... this implies that you *HAVE* to provide nothing else than a textNode as argument.');
             return false;
@@ -285,13 +287,13 @@ export class RenderingEngine {
         node.nodeValue = value;
         return true;
     }
-    updateInterpolatedElement(ref: HTMLElement, originalText: string) {
+    public updateInterpolatedElement(ref: HTMLElement, originalText: string) {
         this.executeDirectivesOnElement(ref, false);
-        var interpolations = this.getInterpolationsForTextContent(originalText);
-        if (interpolations.length === 0) return;
-        var interpolatedText = originalText;
-        for (var interpolation of interpolations) {
-            var value = this.getValueOfInterpolation(interpolation);
+        const interpolations = this.getInterpolationsForTextContent(originalText);
+        if (interpolations.length === 0) { return; }
+        let interpolatedText = originalText;
+        for (const interpolation of interpolations) {
+            const value = this.getValueOfInterpolation(interpolation);
 
             if (this.isElementDisabled(this.stripAndTrimInterpolation(interpolation), ref)) {
                 continue;
@@ -306,11 +308,11 @@ export class RenderingEngine {
         ref.textContent = interpolatedText;
 
     }
-    isDescendant(parent: HTMLElement, child: HTMLElement) {
+    public isDescendant(parent: HTMLElement, child: HTMLElement) {
 
-        var node = child.parentNode;
+        let node = child.parentNode;
         while (node != null) {
-            if (node == parent) {
+            if (node === parent) {
                 return true;
             }
             node = node.parentNode;
@@ -318,10 +320,10 @@ export class RenderingEngine {
         return false;
     }
 
-    isElementDisabled(name: string, element: HTMLElement) {
-        for (var disabled of this.state.disabledElements) {
+    public isElementDisabled(name: string, element: HTMLElement) {
+        for (const disabled of this.state.disabledElements) {
             if (this.isDescendant(element, disabled.element) || this.isDescendant(disabled.element, element)) {
-                if (name.includes(disabled.content)) return true; //Edge case, we have a f***ing scope
+                if (name.includes(disabled.content)) { return true; } // Edge case, we have a f***ing scope
             }
             if (disabled.content === name && disabled.element === element) {
                 return true;
@@ -329,11 +331,11 @@ export class RenderingEngine {
         }
         return false;
     }
-    interpolateElement(element: HTMLElement, interpolations: string[]) {
+    public interpolateElement(element: HTMLElement, interpolations: string[]) {
 
-        for (var interpolation of interpolations) {
+        for (const interpolation of interpolations) {
             this.state.disableElementIfNeeded(element);
-            var value = this.getValueOfInterpolation(interpolation);
+            const value = this.getValueOfInterpolation(interpolation);
             if (this.isElementDisabled(this.stripAndTrimInterpolation(interpolation).trim(), element)) {
                 continue;
             }
@@ -349,44 +351,44 @@ export class RenderingEngine {
         return element;
     }
 
-    nodeHasTextNodeAsAChild(element: HTMLElement): boolean {
-        if (element.nodeType === 3) return true;
-        if (element.childNodes.length === 0) return false;
+    public nodeHasTextNodeAsAChild(element: HTMLElement): boolean {
+        if (element.nodeType === 3) { return true; }
+        if (element.childNodes.length === 0) { return false; }
         return this.nodeHasTextNodeAsAChild(element);
     }
 
-    nodeHasTextNodeAsADirectChild(element: HTMLElement) {
-        for (var child of element.childNodes) {
+    public nodeHasTextNodeAsADirectChild(element: HTMLElement) {
+        for (const child of element.childNodes) {
             if (child.nodeType === 3) {
                 return true;
             }
         }
         return false;
     }
-    isTextNode(element: Node) {
+    public isTextNode(element: Node) {
         return element.nodeType === 3;
     }
-    sanitize(string: string) {
-        if (typeof string !== 'string') return string;
-        var temp = document.createElement('div');
-        temp.textContent = string;
-        var san = temp.innerHTML;
+    public sanitize(str: string) {
+        if (typeof str !== 'string') { return str; }
+        const temp = document.createElement('div');
+        temp.textContent = str;
+        const san = temp.innerHTML;
         return san;
     }
 
-    executeInerpolationsOnElement(element: HTMLElement) {
+    public executeInerpolationsOnElement(element: HTMLElement) {
 
-        for (var child of element.childNodes) {
-            this.executeInerpolationsOnElement(<HTMLElement>child);
+        for (const child of element.childNodes) {
+            this.executeInerpolationsOnElement(child as HTMLElement);
         }
 
-        var interpolations = this.getInterpolationsForTextContent(element.nodeValue);
+        const interpolations = this.getInterpolationsForTextContent(element.nodeValue);
 
         if (this.isTextNode(element)) {
-            //Interpolation should only happen on a text node. Otherwise, DOM may be damaged. 
+            // Interpolation should only happen on a text node. Otherwise, DOM may be damaged. 
 
             if (interpolations.length === 0) {
-                return; //No interpolations on this element
+                return; // No interpolations on this element
             }
 
 
@@ -394,17 +396,21 @@ export class RenderingEngine {
                 return;
             }
 
-            for (let interpolation of interpolations) {
+            for (const interpolation of interpolations) {
 
-                this.state.addActiveElement(<HTMLElement>element, this.getObjectReferenceByInterpolationName(interpolation), element.nodeValue, interpolation);
+                this.state.addActiveElement(<HTMLElement>element,
+                    this.getObjectReferenceByInterpolationName(interpolation),
+                    element.nodeValue,
+                    interpolation);
             }
-            this.interpolateElement(<HTMLElement>element, interpolations);
+            this.interpolateElement(element as HTMLElement, interpolations);
         } else {
-            //Special case: Nfor. We do have to add them, but if this else getts extended for some reason, reconsider this.
-            if (!this.isNForActivated(<HTMLElement>element)) return;
+            // tslint:disable-next-line:max-line-length
+            // Special case: Nfor. We do have to add them, but if this else getts extended for some reason, reconsider this.
+            if (!this.isNForActivated(element as HTMLElement)) { return; }
 
-            let el = <HTMLElement>element;
-            let interpolation = "{{" + el.getAttribute('n-for').split(' ')[3] + "}}"
+            const el = element as HTMLElement;
+            const interpolation = "{{" + el.getAttribute('n-for').split(' ')[3] + "}}";
             this.state.addActiveElement(el, el.getAttribute('n-for').split(' ')[3], null, interpolation);
 
 
