@@ -46,9 +46,9 @@ export class NailsDirectives {
 
 
     for(element: HTMLElement, statemenet: string, state: State) {
-        console.log('n-for called')
-        console.log(state);
         var engine = new RenderingEngine(state);
+        engine.disableInterpolationForVariableNameOnElement(statemenet.split(' ')[1], element);
+
         element.style.display = "none";
         function interpolateCustomElement(element: HTMLElement, object: any, descriptor: any) {
             //Performancewise, we render the whole html element.
@@ -67,7 +67,6 @@ export class NailsDirectives {
                     if(engine.getValueOfInterpolation(interpolation) !== 'undefined'){
                         html = html.replace(interpolation, engine.getValueOfInterpolation(interpolation))
                     }else{
-                        console.log('interpolation inside')
                         html = html.replace(interpolation, engine.sanitize(eval('object'+stripped)));
                     }
                     
@@ -82,10 +81,6 @@ export class NailsDirectives {
         if (typeof refArray === 'undefined' || refArray === null) return;
 
         var parent = element.parentNode;
-        if (parent.childNodes.length > 5) {
-            console.log('State change?')
-            console.log(parent.childNodes.length)
-        }
         for (var i of refArray) {
             var child = document.createElement(element.nodeName);
             child.innerHTML = element.innerHTML;

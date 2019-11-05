@@ -12,14 +12,12 @@ export class Injector {
     }
 
     insert(clazz: any) {
-        console.log(this.state.injectors)
         for (let c of this.state.injectors) {
             if (c instanceof clazz) return;
         }
         this.state.injectors.push(clazz);
     }
     resolve(clazz: any) {
-        console.log(this.state.injectors)
         for (var c of this.state.injectors) {
             if (c instanceof clazz) return c;
         }
