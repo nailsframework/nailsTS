@@ -28,7 +28,7 @@ export class NailsDirectives {
         DONT PREFIX YOUR DIRECTIVE AND FUNCTIONS WITH AN N
     */
 
-    form(element: HTMLElement, statement:string, state: State) {
+    form(element: HTMLElement, statement: string, state: State) {
         if (element.getAttribute('type') === 'text') {
             if (state.data[statement] !== element.innerText) {
                 state.data[statement] = element.innerText;
@@ -56,21 +56,21 @@ export class NailsDirectives {
             var interpolations = engine.getInterpolationsForTextContent(html);
             for (var interpolation of interpolations) {
                 var stripped = engine.stripAndTrimInterpolation(interpolation);
-                    var args = stripped.split('.');
-                    args[0] = '';
-                    stripped = '';
-                    for(var arg of args){
-                        stripped += arg + '.'
-                    }
-                    stripped = stripped.substring(0, stripped.length - 1);
+                var args = stripped.split('.');
+                args[0] = '';
+                stripped = '';
+                for (var arg of args) {
+                    stripped += arg + '.'
+                }
+                stripped = stripped.substring(0, stripped.length - 1);
 
-                    if(engine.getValueOfInterpolation(interpolation) !== 'undefined'){
-                        html = html.replace(interpolation, engine.getValueOfInterpolation(interpolation))
-                    }else{
-                        html = html.replace(interpolation, engine.sanitize(eval('object'+stripped)));
-                    }
-                    
-                
+                if (engine.getValueOfInterpolation(interpolation) !== 'undefined') {
+                    html = html.replace(interpolation, engine.getValueOfInterpolation(interpolation))
+                } else {
+                    html = html.replace(interpolation, engine.sanitize(eval('object' + stripped)));
+                }
+
+
             }
             element.innerHTML = html;
 
@@ -96,6 +96,17 @@ export class NailsDirectives {
 
     }
     if(element: HTMLElement, statement: string, state: State) {
+        if (statement === 'true' || 'false') {
+            if (statement === 'true') {
+                element.style.visibility = 'visible';
+                return;
+            } else {
+                element.style.visibility = 'hidden';
+                console.log(element);
+                return;
+            }
+        }
+
         var reversed = false;
         if (statement[0] === '!') {
             statement = statement.substring(1);
@@ -104,16 +115,16 @@ export class NailsDirectives {
         if (state.data.hasOwnProperty(statement)) {
             if (reversed) {
                 if (!eval(state.data[statement])) {
-                    element.style.display = 'block';
+                    element.style.visibility = 'visible';
                 } else {
 
-                    element.style.display = 'none';
+                    element.style.visibility = 'hidden';
                 }
             } else {
                 if (eval(state.data[statement])) {
-                    element.style.display = 'block';
+                    element.style.visibility = 'visible';
                 } else {
-                    element.style.display = 'none';
+                    element.style.visibility = 'hidden';
 
                 }
             }
