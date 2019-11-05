@@ -1,14 +1,14 @@
-'use strict';
-import { NailsDirectives } from './directiveDefinitions';
-import { State } from './state';
-import { ActiveElement } from './classes/ActiveElement';
+"use strict";
+import { ActiveElement } from "./classes/ActiveElement";
+import { NailsDirectives } from "./directiveDefinitions";
+import { State } from "./state";
 export class RenderingEngine {
 
     public state: State;
     public directives: NailsDirectives;
 
     constructor(state: State) {
-        if (typeof state === 'undefined' || state === null) {
+        if (typeof state === "undefined" || state === null) {
             // tslint:disable-next-line:no-console
             console.log("Engine was initialized without a state");
         }
@@ -18,25 +18,26 @@ export class RenderingEngine {
     }
 
     public indexDOM() {
-        if (typeof this.state.element !== 'undefined') {
-            var element = null;
-            if (this.state.element.startsWith('#')) {
+        if (typeof this.state.element !== "undefined") {
+            let element = null;
+            if (this.state.element.startsWith("#")) {
                 const selector = this.state.element.substr(1);
                 element = document.getElementById(selector);
             } else {
                 element = document.getElementsByTagName(this.state.element);
             }
 
-            if (typeof element === 'undefined' || element === null) {
-                console.error('No element with selector: ' + this.state.element + ' has been found');
+            if (typeof element === "undefined" || element === null) {
+                console.error("No element with selector: " + this.state.element + " has been found");
                 return;
             }
             if (element instanceof HTMLCollection && element.length > 1) {
-                console.error('Multiple choices, try using id if the element tag is not unique. Your Selector was: ' + this.state.element);
+                // tslint:disable-next-line:max-line-length
+                console.error("Multiple choices, try using id if the element tag is not unique. Your Selector was: " + this.state.element);
                 return;
             }
             if (element instanceof HTMLCollection && element.length === 0) {
-                console.error('No element with selector: ' + this.state.element + ' has been found');
+                console.error("No element with selector: " + this.state.element + " has been found");
                 return;
             }
             if (element instanceof HTMLCollection) {
@@ -57,90 +58,91 @@ export class RenderingEngine {
     }
 
 
-    insert(index: number, string: string, ref: string) {
-        if (index > 0)
-            return ref.substring(0, index) + string + ref.substring(index, ref.length);
+    public insert(index: number, str: string, ref: string) {
+        if (index > 0) {
+            return ref.substring(0, index) + str + ref.substring(index, ref.length);
+        }
 
-        return string + ref;
-    };
+        return str + ref;
+    }
 
 
-    setTitle() {
-        if (typeof this.state.data.title !== 'undefined' || this.state.data.title === null) {
+    public setTitle() {
+        if (typeof this.state.data.title !== "undefined" || this.state.data.title === null) {
             document.title = this.state.data.title;
         }
     }
 
-    elementCanGetAttribute(element: HTMLElement) {
-        return 'getAttribute' in element;
+    public elementCanGetAttribute(element: HTMLElement) {
+        return "getAttribute" in element;
     }
 
-    isNForActivated(element: HTMLElement) {
+    public isNForActivated(element: HTMLElement) {
         if (this.elementCanGetAttribute(element)) {
-            return element.getAttribute('n-for') !== null;
+            return element.getAttribute("n-for") !== null;
         }
         return false;
     }
 
-    disableInterpolationForVariableNameOnElement(name: string, element: HTMLElement) {
-        if (typeof name === 'undefined' || typeof element === 'undefined') return;
-        for (var el of this.state.disabledElements) {
-            if (el.content == name && el.element == element) {
+    public disableInterpolationForVariableNameOnElement(name: string, element: HTMLElement) {
+        if (typeof name === "undefined" || typeof element === "undefined") { return; }
+        for (const el of this.state.disabledElements) {
+            if (el.content === name && el.element === element) {
                 return;
             }
         }
-        let activeElement = new ActiveElement(element, null, '', name, '', '');
+        const activeElement = new ActiveElement(element, null, "", name, "", "");
         this.state.disabledElements.push(activeElement);
     }
-    getElementDerrivedObject(element: HTMLElement) {
-        return 'object'
+    public getElementDerrivedObject(element: HTMLElement) {
+        return "object";
     }
-    getElementDerrivedProperty(element: HTMLElement) {
-        return 'property'
-    };
-    getForArrayByStatement(statement: string) {
-        let statements = statement.split(' ');
+    public getElementDerrivedProperty(element: HTMLElement) {
+        return "property";
+    }
+    public getForArrayByStatement(statement: string) {
+        const statements = statement.split(" ");
         return statements[statements.length];
     }
-    isForAttribute(element: ActiveElement) {
-        let el = element.element;
-        if ('getAttribute' in el) {
-            return el.getAttribute('n-for') !== null;
+    public isForAttribute(element: ActiveElement) {
+        const el = element.element;
+        if ("getAttribute" in el) {
+            return el.getAttribute("n-for") !== null;
         } else {
             return false;
         }
     }
 
-    isActiveElement(element: HTMLElement) {
+    public isActiveElement(element: HTMLElement) {
         return this.getElementDirectives(element).length > 0;
 
     }
 
-    removePrefix(directive: string) {
-        return directive.substring(2)
+    public removePrefix(directive: string) {
+        return directive.substring(2);
     }
-    prefixDiretive(directive: string) {
-        return 'n-' + directive;
+    public prefixDiretive(directive: string) {
+        return "n-" + directive;
     }
-    getElementDirectives(element: HTMLElement) {
-        if (typeof element === 'undefined') {
+    public getElementDirectives(element: HTMLElement) {
+        if (typeof element === "undefined") {
             return [];
         }
-        var directives: string[] = [];
-        for (var directive of this.directives.directives) {
+        const directives: string[] = [];
+        for (let directive of this.directives.directives) {
             directive = this.prefixDiretive(directive);
-            if ('hasAttribute' in element && element.hasAttribute(directive)) {
+            if ("hasAttribute" in element && element.hasAttribute(directive)) {
                 directives.push(directive);
             }
         }
         return directives;
     }
 
-    indexElement(element: HTMLElement) {
+    public indexElement(element: HTMLElement) {
         this.state.disableElementIfNeeded(element);
-        let activeElements: any[] = [];
-        for (var child of element.childNodes) {
-            var active = this.indexElement(<HTMLElement>child);
+        const activeElements: any[] = [];
+        for (const child of element.childNodes) {
+            const active = this.indexElement(child as HTMLElement);
             activeElements.push.apply(activeElements, active);
         }
         if (this.isActiveElement(element)) {
@@ -150,29 +152,30 @@ export class RenderingEngine {
         return activeElements;
     }
 
-    getElementAttributeForDirective(element: HTMLElement, directive: string) {
+    public getElementAttributeForDirective(element: HTMLElement, directive: string) {
         directive = this.prefixDiretive(directive);
         if (element.hasAttribute(directive)) {
             return element.getAttribute(directive);
         } else {
-            console.warn('directive: ' + directive + ' not found on element: ' + element);
-            return '';
+            console.warn("directive: " + directive + " not found on element: " + element);
+            return "";
         }
     }
-    executeDirectivesOnElement(element: HTMLElement, add: Boolean) {
-        var directives = this.getElementDirectives(element);
+    public executeDirectivesOnElement(element: HTMLElement, add: boolean) {
+        const directives = this.getElementDirectives(element);
         for (let directive of directives) {
             directive = this.removePrefix(directive);
             if (directive in this.directives) {
-                eval('this.directives.' + directive + '(element, this.getElementAttributeForDirective(element, directive), this.state)');
-                let nDirectives = this.getElementDirectives(element);
+                // tslint:disable-next-line:no-eval
+                eval("this.directives." + directive + "(element, this.getElementAttributeForDirective(element, directive), this.state)");
+                const nDirectives = this.getElementDirectives(element);
                 if (add) {
-                    for (var dir of nDirectives) {
-                        this.state.addActiveDirectiveElement(dir, element.getAttribute(dir), element)
+                    for (const dir of nDirectives) {
+                        this.state.addActiveDirectiveElement(dir, element.getAttribute(dir), element);
                     }
                 }
             } else {
-                console.warn('not found directive: ' + directive)
+                console.warn("not found directive: " + directive);
             }
         }
     }
@@ -180,74 +183,77 @@ export class RenderingEngine {
 
 
 
-    stripAndTrimNForInterpolation(interpolation: string) {
-        interpolation = interpolation.replace('[[[', '');
-        interpolation = interpolation.replace(']]]', '');
+    public stripAndTrimNForInterpolation(interpolation: string) {
+        interpolation = interpolation.replace("[[[", "");
+        interpolation = interpolation.replace("]]]", "");
         interpolation = interpolation.trim();
         return interpolation;
     }
 
-    getNForInterpolations(content: string) {
-        let interpolations: string[]
+    public getNForInterpolations(content: string) {
+        // tslint:disable-next-line:prefer-const
+        let interpolations: string[];
         content = content.trim();
-        var matches = content.match(/\[\[\[(( +)?\w+.?\w+( +)?)\]\]\]/g);
-        if (matches === null) return interpolations;
-        for (let match of matches) {
+        const matches = content.match(/\[\[\[(( +)?\w+.?\w+( +)?)\]\]\]/g);
+        if (matches === null) { return interpolations; }
+        for (const match of matches) {
             interpolations.push(match);
         }
 
         return interpolations;
     }
-    getNForInterpolation(interpolation: string) {
+    public getNForInterpolation(interpolation: string) {
         interpolation = interpolation.trim();
         if (interpolation.match(/\[\[\[(( +)?\w+.?\w+( +)?)\]\]\]/g)) {
             interpolation = this.stripAndTrimNForInterpolation(interpolation);
         } else {
-            console.warn('Not found interpolation in submitted value: ' + interpolation);
+            console.warn("Not found interpolation in submitted value: " + interpolation);
             return interpolation;
         }
 
         return interpolation;
 
     }
-    getValueOfInterpolation(interpolation: string) {
+    public getValueOfInterpolation(interpolation: string) {
         // This comes in the format of {{ interpolation }}
         interpolation = interpolation.trim();
         if (interpolation.match(/{{(.?\s?\w?.?\w\s?)+}}/g)) {
             interpolation = this.stripAndTrimInterpolation(interpolation);
 
         } else {
-            console.warn('Not found interpolation in submitted value: ' + interpolation);
+            console.warn("Not found interpolation in submitted value: " + interpolation);
             return interpolation;
         }
         interpolation = interpolation.trim();
-        var stripped = this.stripAndTrimInterpolation(interpolation);
+        let stripped = this.stripAndTrimInterpolation(interpolation);
 
-        var args = stripped.split('.');
-        stripped = '';
-        for (var arg of args) {
-            stripped += arg + '.'
+        const args = stripped.split(".");
+        stripped = "";
+        for (const arg of args) {
+            stripped += arg + ".";
         }
         stripped = stripped.substring(0, stripped.length - 1);
-        if (typeof this.state.data[stripped.split('.')[0]] === 'undefined') {
-            return 'undefined' //This saves us from from crashing when user tries to user data.key.subkey where data.key is not defined. Also leaves n-for alone
+        if (typeof this.state.data[stripped.split(".")[0]] === "undefined") {
+            // tslint:disable-next-line:max-line-length
+            return "undefined"; // This saves us from from crashing when user tries to user data.key.subkey where data.key is not defined. Also leaves n-for alone
         }
-        return eval('this.state.data.' + stripped);
+        // tslint:disable-next-line:no-eval
+        return eval("this.state.data." + stripped);
     }
 
-    removeWhiteSpaceFromString(str: string) {
+    public removeWhiteSpaceFromString(str: string) {
         return str.replace(/\s/g, "");
     }
-    stripAndTrimInterpolation(interpolation: string) {
-        if (typeof interpolation === 'undefined' || typeof interpolation === null) return interpolation;
-        interpolation = interpolation.replace('{{', '');
-        interpolation = interpolation.replace('}}', '');
+    public stripAndTrimInterpolation(interpolation: string) {
+        if (typeof interpolation === "undefined" || typeof interpolation === null) { return interpolation; }
+        interpolation = interpolation.replace("{{", "");
+        interpolation = interpolation.replace("}}", "");
         interpolation = interpolation.trim();
         return interpolation;
     }
-    getInterpolationsForTextContent(text: string) {
+    public getInterpolationsForTextContent(text: string) {
         const interpolations: string[] = [];
-        if (typeof text === 'undefined' || text === null) { return interpolations; }
+        if (typeof text === "undefined" || text === null) { return interpolations; }
         // text may come in this format 'hi, this is {{test}} and this is {{abc}}'
         const matches = text.match(/{{(.?\s?\w?.?\w\s?)+}}/g); // TODO: Regex is not perfect. May start with .
         if (matches === null) { return []; }
@@ -258,7 +264,7 @@ export class RenderingEngine {
     }
     public getObjectReferenceByInterpolationName(interpolation: string) {
         interpolation = this.stripAndTrimInterpolation(interpolation);
-        return this.state.data[interpolation]; //H andle interpolations with . inside
+        return this.state.data[interpolation]; // H andle interpolations with . inside
     }
 
     // tslint:disable-next-line:no-empty
@@ -281,7 +287,7 @@ export class RenderingEngine {
 
     public setContentOfTextNode(node: Node, value: string) {
         if (node.nodeType !== 3) {
-            console.error('setContentOfTextNode... this implies that you *HAVE* to provide nothing else than a textNode as argument.');
+            console.error("setContentOfTextNode... this implies that you *HAVE* to provide nothing else than a textNode as argument.");
             return false;
         }
         node.nodeValue = value;
@@ -343,7 +349,7 @@ export class RenderingEngine {
             let text = element.textContent || element.textContent;
             text = text.replace(interpolation, value);
 
-            if ('textContent' in element) {
+            if ("textContent" in element) {
                 element.textContent = text;
                 continue;
             }
@@ -369,8 +375,8 @@ export class RenderingEngine {
         return element.nodeType === 3;
     }
     public sanitize(str: string) {
-        if (typeof str !== 'string') { return str; }
-        const temp = document.createElement('div');
+        if (typeof str !== "string") { return str; }
+        const temp = document.createElement("div");
         temp.textContent = str;
         const san = temp.innerHTML;
         return san;
@@ -385,7 +391,7 @@ export class RenderingEngine {
         const interpolations = this.getInterpolationsForTextContent(element.nodeValue);
 
         if (this.isTextNode(element)) {
-            // Interpolation should only happen on a text node. Otherwise, DOM may be damaged. 
+            // Interpolation should only happen on a text node. Otherwise, DOM may be damaged.
 
             if (interpolations.length === 0) {
                 return; // No interpolations on this element
@@ -398,7 +404,7 @@ export class RenderingEngine {
 
             for (const interpolation of interpolations) {
 
-                this.state.addActiveElement(<HTMLElement>element,
+                this.state.addActiveElement(element as HTMLElement,
                     this.getObjectReferenceByInterpolationName(interpolation),
                     element.nodeValue,
                     interpolation);
@@ -410,8 +416,8 @@ export class RenderingEngine {
             if (!this.isNForActivated(element as HTMLElement)) { return; }
 
             const el = element as HTMLElement;
-            const interpolation = "{{" + el.getAttribute('n-for').split(' ')[3] + "}}";
-            this.state.addActiveElement(el, el.getAttribute('n-for').split(' ')[3], null, interpolation);
+            const interpolation = "{{" + el.getAttribute("n-for").split(" ")[3] + "}}";
+            this.state.addActiveElement(el, el.getAttribute("n-for").split(" ")[3], null, interpolation);
 
 
         }
