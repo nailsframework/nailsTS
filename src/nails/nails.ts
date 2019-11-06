@@ -10,6 +10,7 @@ class Factory {
         return new type();
     }
 }
+// tslint:disable-next-line:max-classes-per-file
 export class Nails {
 
     state: State;
@@ -50,8 +51,8 @@ export class Nails {
         this.injector = new Injector(this.state);
         this.prepareInjector(object.declarations);
         this.state.addInjector(this.injector);
-        this.componentEngine.renderComponents();
         this.engine.indexDOM();
+        this.componentEngine.renderComponents();
         this.engine.setTitle();
         this.state.methods.getState = function () {
             return this.state;

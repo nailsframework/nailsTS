@@ -46,7 +46,7 @@ export class NailsDirectives {
 
 
     for(element: HTMLElement, statemenet: string, state: State) {
-        var engine = new RenderingEngine(state);
+        const engine = new RenderingEngine(state);
         engine.disableInterpolationForVariableNameOnElement(statemenet.split(' ')[1], element);
 
         element.style.display = "none";
@@ -86,6 +86,8 @@ export class NailsDirectives {
             child.innerHTML = element.innerHTML;
             interpolateCustomElement(child, i, descriptor);
             parent.appendChild(child);
+            engine.disableInterpolationForVariableNameOnElement(statemenet.split(' ')[1], child);
+
             for (let i of element.attributes) {
                 if (i.name !== 'n-for' && i.name !== 'style') {
                     child.setAttribute(i.name, i.value)

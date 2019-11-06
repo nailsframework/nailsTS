@@ -40,19 +40,20 @@ export class ComponentEngine {
 
     traverseElementAndExecuteDirectives(element: HTMLElement) {
 
-        if(!element) return;
+        if (!element) return;
         if (element.childNodes.length > 0) {
             for (let child of element.childNodes) {
-                this.traverseElementAndExecuteDirectives(<HTMLElement>child)
+                this.traverseElementAndExecuteDirectives(child as HTMLElement)
             }
         }
 
-        this.engine.executeDirectivesOnElement(element, true)
+        this.engine.executeDirectivesOnElement(element, true);
 
     }
 
-    renderComponents() {
+    renderComponents(exclude?: HTMLElement) {
         this.injectComponents();
+        // tslint:disable-next-line:max-line-length
         if (typeof this.state.mountedComponents !== 'undefined' && this.state.mountedComponents !== null && this.state.mountedComponents.length > 0) {
             for (let i = 0; i < 300; i++) {
                 let html = document.body.innerHTML;
@@ -63,18 +64,19 @@ export class ComponentEngine {
                     if (elements.length === 0) {
                         continue;
                     }
-                    for (var element of elements) {
+                    for (const element of elements) {
+
                         if (element.childNodes.length > 0) {
                             continue;
                         }
-                        var componentHTML = component.render();
+                        let componentHTML = component.render();
                         if (componentHTML.includes('<' + component.selector + '>')) {
                             continue;
                         }
                         element.innerHTML = componentHTML;
 
-                        this.traverseElementAndExecuteDirectives(element)
-                        this.engine.executeInerpolationsOnElement(element)
+                        // this.engine.executeInerpolationsOnElement(element);
+                        // this.traverseElementAndExecuteDirectives(element);
 
 
 
@@ -84,6 +86,26 @@ export class ComponentEngine {
                 }
                 if (html == newHtml) {
                     break;
+
+                }
+            }
+            for (var component of this.state.mountedComponents) {
+                var elements = document.getElementsByTagName(component.selector);
+                if (elements.length === 0) {
+                    continue;
+                }
+                for (const element of elements) {
+                    if (element.childNodes.length > 0) {
+                        if (element === exclude) {
+                            continue;
+                        }
+
+                        this.traverseElementAndExecuteDirectives(element);
+                        this.engine.executeInerpolationsOnElement(element);
+
+
+
+                    }
 
                 }
             }
@@ -106,15 +128,15 @@ export class ComponentEngine {
             }
             var elements = document.getElementsByTagName(name);
             for (var element of elements) {
-                var componentHTML = component.render();
+                let componentHTML = component.render();
                 if (componentHTML.includes('<' + component.selector + '>')) {
                     console.error('component ' + component.selector + ' has a recursion with no exit condition');
                     continue;
                 }
                 element.innerHTML = componentHTML;
-                this.renderComponents();
+                this.renderComponents(<HTMLElement>element);
             }
-        }else{
+        } else {
         }
     }
 
