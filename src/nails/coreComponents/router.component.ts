@@ -35,8 +35,8 @@ export class Router {
         this.routings = routings;
     }
 
-    getHashRoute(){
-       return window.location.hash.replace('#/', '');
+    getHashRoute() {
+        return window.location.hash.replace('#/', '');
     }
 
     getComponent() {

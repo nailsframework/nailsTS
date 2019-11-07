@@ -149,7 +149,6 @@ export class RenderingEngine {
             activeElements.push(element);
         }
 
-        console.log(activeElements);
         return activeElements;
     }
 

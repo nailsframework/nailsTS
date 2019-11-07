@@ -1,46 +1,52 @@
-import { LoginComponent } from './components/login.component'
-import { Router } from './nails/coreComponents/router.component';
-import { Nails } from './nails/nails'
-import { Greeter } from './modules/injectme.module';
-import { ShowcaseComponent } from './components/showcase.component';
-import { NavbarComponent } from './components/navbar.component';
-import { State } from './nails/state';
+import { LoginComponent } from "./components/login.component"
+import { NavbarComponent } from "./components/navbar.component";
+// tslint:disable-next-line: ordered-imports
+import { ShowcaseComponent } from "./components/showcase.component";
+import { Greeter } from "./modules/injectme.module";
+import { Router } from "./nails/coreComponents/router.component";
+import { Nails } from "./nails/nails"
+import { State } from "./nails/state";
 
 
-var guard = function () {
-    return localStorage.getItem('jwt') !== null;
-}
 
-let nails = new Nails({
-    el: "body", //Start with # to specify id
+
+const nails = new Nails({
+    el: "body", // Start with # to specify id
+    // tslint:disable:object-literal-sort-keys
     data: {
         title: "Your Nails App",
         whoami: "NailsJS",
         sample: [
             { name: "Jill", lastname: "smith" },
             { name: "Ingo", lastname: "Meyers" },
-        ]
+        ],
+        show: true,
     },
     methods: {
         onInit() {
+            // tslint:disable-next-line:max-line-length
             // This method is called during early construction of the State. As a result, there no state supplied as an argument.
+            // tslint:disable-next-line:max-line-length
             // You may use this, to trigger your own scripts. Beware, that the dom is not rendered at this time, so use OnMounted for any DOM operations.
         },
         onMounted(currentState: State) {
-            currentState.data.headers = [{ 'Test': 'Value' }];
+            currentState.data.headers = [{ "Test": "Value" }];
+        },
+        toggle() {
+            nails.state.data.show = !nails.state.data.show;
         },
 
     },
     components: [
-        LoginComponent, Router, ShowcaseComponent, NavbarComponent
+        LoginComponent, Router, ShowcaseComponent, NavbarComponent,
     ],
     routings: [{
         component: LoginComponent,
-        route: 'login',
+        route: "login",
     }],
     declarations: [
-        Greeter
-    ]
+        Greeter,
+    ],
 });
 
 

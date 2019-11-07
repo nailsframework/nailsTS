@@ -1,18 +1,18 @@
-'use strict';
-import { RenderingEngine } from "./engine";
-import { State } from "./state";
+"use strict";
 import { ENGINE_METHOD_DIGESTS } from "constants";
 import { ComponentEngine } from "./componentEngine";
+import { RenderingEngine } from "./engine";
+import { State } from "./state";
 export class NailsDirectives {
 
-    directives: any
+    public directives: any;
     constructor() {
-        this.directives = ['if', 'form', 'for', 'click']
+        this.directives = ["if", "form", "for", "click"];
     }
     /*
-        A directive exists of an element (string) in the @directives array and a function declaration 
+        A directive exists of an element (string) in the @directives array and a function declaration
         below.
-        directive and function need to have the same name 
+        directive and function need to have the same name
         sample body:
         sample(element, statement, state){
 
@@ -35,16 +35,15 @@ export class NailsDirectives {
             state.click.callbacks = [];
         }
         const callback = () => {
-            // alert(statement);
-            eval('state.methods.' + statement);
+            eval("state.methods." + statement);
         };
         element.onclick = callback;
 
 
 
     }
-    form(element: HTMLElement, statement: string, state: State) {
-        if (element.getAttribute('type') === 'text') {
+    public form(element: HTMLElement, statement: string, state: State) {
+        if (element.getAttribute("type") === "text") {
             if (state.data[statement] !== element.innerText) {
                 state.data[statement] = element.innerText;
             }
@@ -60,30 +59,30 @@ export class NailsDirectives {
 
 
 
-    for(element: HTMLElement, statemenet: string, state: State) {
-        console.error('called')
+    public for(element: HTMLElement, statemenet: string, state: State) {
+        console.error("called");
         const engine = new RenderingEngine(state);
-        engine.disableInterpolationForVariableNameOnElement(statemenet.split(' ')[1], element);
+        engine.disableInterpolationForVariableNameOnElement(statemenet.split(" ")[1], element);
 
         element.style.display = "none";
         function interpolateCustomElement(element: HTMLElement, object: any, descriptor: any) {
-            //Performancewise, we render the whole html element.
-            var html = element.innerHTML;
-            var interpolations = engine.getInterpolationsForTextContent(html);
-            for (var interpolation of interpolations) {
-                var stripped = engine.stripAndTrimInterpolation(interpolation);
-                var args = stripped.split('.');
-                args[0] = '';
-                stripped = '';
-                for (var arg of args) {
-                    stripped += arg + '.'
+            // Performancewise, we render the whole html element.
+            let html = element.innerHTML;
+            let interpolations = engine.getInterpolationsForTextContent(html);
+            for (let interpolation of interpolations) {
+                let stripped = engine.stripAndTrimInterpolation(interpolation);
+                let args = stripped.split(".");
+                args[0] = "";
+                stripped = "";
+                for (let arg of args) {
+                    stripped += arg + "."
                 }
                 stripped = stripped.substring(0, stripped.length - 1);
 
-                if (engine.getValueOfInterpolation(interpolation) !== 'undefined') {
-                    html = html.replace(interpolation, engine.getValueOfInterpolation(interpolation))
+                if (engine.getValueOfInterpolation(interpolation) !== "undefined") {
+                    html = html.replace(interpolation, engine.getValueOfInterpolation(interpolation));
                 } else {
-                    html = html.replace(interpolation, engine.sanitize(eval('object' + stripped)));
+                    html = html.replace(interpolation, engine.sanitize(eval("object" + stripped)));
                 }
 
 
@@ -91,66 +90,71 @@ export class NailsDirectives {
             element.innerHTML = html;
 
         }
-        var descriptor = statemenet.split(' ')[1];
-        var arr = statemenet.split(' ')[3];
-        var refArray = eval("state.data." + arr);
-        if (typeof refArray === 'undefined' || refArray === null) return;
+        let descriptor = statemenet.split(" ")[1];
+        let arr = statemenet.split(" ")[3];
+        let refArray = eval("state.data." + arr);
+        if (typeof refArray === "undefined" || refArray === null) { return; }
 
-        var parent = element.parentNode;
-        for (var i of refArray) {
-            var child = document.createElement(element.nodeName);
+        let parent = element.parentNode;
+        for (let i of refArray) {
+            let child = document.createElement(element.nodeName);
             child.innerHTML = element.innerHTML;
             interpolateCustomElement(child, i, descriptor);
             parent.appendChild(child);
-            engine.disableInterpolationForVariableNameOnElement(statemenet.split(' ')[1], child);
+            engine.disableInterpolationForVariableNameOnElement(statemenet.split(" ")[1], child);
 
-            for (let i of element.attributes) {
-                if (i.name !== 'n-for' && i.name !== 'style') {
-                    child.setAttribute(i.name, i.value)
+            for (const i of element.attributes) {
+                if (i.name !== "n-for" && i.name !== "style") {
+                    child.setAttribute(i.name, i.value);
                 }
             }
-            console.log('Executed Directives on child')
             const componentEngine = new ComponentEngine(state, engine, null, null);
             componentEngine.traverseElementAndExecuteDirectives(child);
-            //engine.executeDirectivesOnElement(child, true)
+            // engine.executeDirectivesOnElement(child, true)
         }
 
     }
-    if(element: HTMLElement, statement: string, state: State) {
-        if (statement === 'true' || 'false') {
-            if (statement === 'true') {
-                element.style.visibility = 'visible';
+    public if(element: HTMLElement, statement: string, state: State) {
+        if (statement === "true" || statement === "false") {
+            if (statement === "true") {
+                element.style.visibility = "visible";
+
                 return;
             } else {
-                element.style.visibility = 'hidden';
+                element.style.visibility = "hidden";
+
                 return;
             }
         }
 
-        var reversed = false;
-        if (statement[0] === '!') {
+        let reversed = false;
+        if (statement[0] === "!") {
             statement = statement.substring(1);
             reversed = true;
         }
         if (state.data.hasOwnProperty(statement)) {
             if (reversed) {
                 if (!eval(state.data[statement])) {
-                    element.style.visibility = 'visible';
+                    element.style.visibility = "visible";
+
                 } else {
 
-                    element.style.visibility = 'hidden';
+                    element.style.visibility = "hidden";
+
                 }
             } else {
                 if (eval(state.data[statement])) {
-                    element.style.visibility = 'visible';
+                    element.style.visibility = "visible";
+
                 } else {
-                    element.style.visibility = 'hidden';
+                    element.style.visibility = "hidden";
+
 
                 }
             }
 
         } else {
-            console.warn('statement: ' + statement + ' not found in context')
+            console.warn("statement: " + statement + " not found in context");
         }
     }
 

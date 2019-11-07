@@ -1,4 +1,4 @@
-export interface IActiveElement{
+export interface IActiveElement {
     element: HTMLElement,
     reference: any,
     content: string,

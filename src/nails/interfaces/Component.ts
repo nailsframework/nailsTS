@@ -1,5 +1,5 @@
 
-export interface IComponent{
+export interface IComponent {
     selector: string,
     render: Function
 }
