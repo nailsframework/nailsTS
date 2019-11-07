@@ -46,6 +46,7 @@ export class NailsDirectives {
 
 
     for(element: HTMLElement, statemenet: string, state: State) {
+        console.error('called')
         const engine = new RenderingEngine(state);
         engine.disableInterpolationForVariableNameOnElement(statemenet.split(' ')[1], element);
 
@@ -104,7 +105,6 @@ export class NailsDirectives {
                 return;
             } else {
                 element.style.visibility = 'hidden';
-                console.log(element);
                 return;
             }
         }
