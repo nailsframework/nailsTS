@@ -149,6 +149,7 @@ export class RenderingEngine {
             activeElements.push(element);
         }
 
+        console.log(activeElements);
         return activeElements;
     }
 
@@ -215,6 +216,7 @@ export class RenderingEngine {
 
     }
     public getValueOfInterpolation(interpolation: string) {
+
         // This comes in the format of {{ interpolation }}
         interpolation = interpolation.trim();
         if (interpolation.match(/{{(.?\s?\w?.?\w\s?)+}}/g)) {

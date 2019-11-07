@@ -28,8 +28,8 @@ let nails = new Nails({
         },
         onMounted(currentState: State) {
             currentState.data.headers = [{ 'Test': 'Value' }];
-            currentState.data.whoami = 'pkz'
         },
+
     },
     components: [
         LoginComponent, Router, ShowcaseComponent, NavbarComponent

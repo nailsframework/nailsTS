@@ -1,11 +1,13 @@
 'use strict';
 import { RenderingEngine } from "./engine";
 import { State } from "./state";
+import { ENGINE_METHOD_DIGESTS } from "constants";
+import { ComponentEngine } from "./componentEngine";
 export class NailsDirectives {
 
     directives: any
     constructor() {
-        this.directives = ['if', 'form', 'for', 'test']
+        this.directives = ['if', 'form', 'for', 'click']
     }
     /*
         A directive exists of an element (string) in the @directives array and a function declaration 
@@ -23,11 +25,24 @@ export class NailsDirectives {
         state = current state
 
         For reactivness, only use elements in the data object within the state, as these
-        are actively monitored. 
+        are actively monitored.
 
         DONT PREFIX YOUR DIRECTIVE AND FUNCTIONS WITH AN N
     */
 
+    public click(element: HTMLElement, statement: string, state: State) {
+        if (!state.click) {
+            state.click.callbacks = [];
+        }
+        const callback = () => {
+            // alert(statement);
+            eval('state.methods.' + statement);
+        };
+        element.onclick = callback;
+
+
+
+    }
     form(element: HTMLElement, statement: string, state: State) {
         if (element.getAttribute('type') === 'text') {
             if (state.data[statement] !== element.innerText) {
@@ -94,7 +109,10 @@ export class NailsDirectives {
                     child.setAttribute(i.name, i.value)
                 }
             }
-            engine.executeDirectivesOnElement(child, true)
+            console.log('Executed Directives on child')
+            const componentEngine = new ComponentEngine(state, engine, null, null);
+            componentEngine.traverseElementAndExecuteDirectives(child);
+            //engine.executeDirectivesOnElement(child, true)
         }
 
     }
