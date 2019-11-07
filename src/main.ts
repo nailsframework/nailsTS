@@ -20,7 +20,6 @@ const nails = new Nails({
             { name: "Jill", lastname: "smith" },
             { name: "Ingo", lastname: "Meyers" },
         ],
-        show: true,
     },
     methods: {
         onInit() {
@@ -31,9 +30,6 @@ const nails = new Nails({
         },
         onMounted(currentState: State) {
             currentState.data.headers = [{ "Test": "Value" }];
-        },
-        toggle() {
-            nails.state.data.show = !nails.state.data.show;
         },
 
     },
