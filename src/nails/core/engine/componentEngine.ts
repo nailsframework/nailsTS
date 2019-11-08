@@ -1,7 +1,7 @@
-import { Router } from '../components/router.component';
-import { RenderingEngine } from './engine';
-import { Nails } from '../../nails';
-import { State } from '../state';
+import { Nails } from "../../nails";
+import { Router } from "../components/router.component";
+import { State } from "../state";
+import { RenderingEngine } from "./engine";
 
 
 export class ComponentEngine {
@@ -52,16 +52,6 @@ export class ComponentEngine {
         this.engine.executeDirectivesOnElement(element, true);
 
     }
-
-    private shallRenderElement(element: HTMLElement): boolean {
-        // Don't forget to clear this array as it may messes with the DOM.
-        for (const parent of this.renderedElements) {
-            if (this.engine.isDescendant(parent, element)) {
-                return false;
-            }
-        }
-        return true;
-    }
     // tslint:disable-next-line:member-ordering
     public renderComponents(exclude?: HTMLElement) {
         this.injectComponents();
@@ -71,8 +61,8 @@ export class ComponentEngine {
                 const html = document.body.innerHTML;
 
                 let newHtml;
-                for (let component of this.state.mountedComponents) {
-                    let elements = document.getElementsByTagName(component.selector);
+                for (const component of this.state.mountedComponents) {
+                    const elements = document.getElementsByTagName(component.selector);
                     if (elements.length === 0) {
                         continue;
                     }
@@ -101,8 +91,8 @@ export class ComponentEngine {
 
                 }
             }
-            for (let component of this.state.mountedComponents) {
-                let elements = document.getElementsByTagName(component.selector);
+            for (const component of this.state.mountedComponents) {
+                const elements = document.getElementsByTagName(component.selector);
                 if (elements.length === 0) {
                     continue;
                 }
@@ -130,7 +120,7 @@ export class ComponentEngine {
     public recreateComponentsByName(name: string) {
         if (typeof this.state.mountedComponents !== "undefined" && this.state.mountedComponents !== null) {
             let component = null;
-            for (let c of this.state.mountedComponents) {
+            for (const c of this.state.mountedComponents) {
                 if (c.selector === name) {
                     component = c;
                 }
@@ -141,8 +131,8 @@ export class ComponentEngine {
             if (this.state.mountedComponents[name] === null) {
                 return;
             }
-            let elements = document.getElementsByTagName(name);
-            for (let element of elements) {
+            const elements = document.getElementsByTagName(name);
+            for (const element of elements) {
                 const componentHTML = component.render();
                 if (componentHTML.includes("<" + component.selector + ">")) {
                     console.error("component " + component.selector + " has a recursion with no exit condition");
@@ -151,12 +141,21 @@ export class ComponentEngine {
                 element.innerHTML = componentHTML;
                 this.renderComponents(element as HTMLElement);
             }
-        } else {
         }
     }
 
 
     public recreateAllComponents() {
         this.renderComponents();
+    }
+
+    private shallRenderElement(element: HTMLElement): boolean {
+        // Don't forget to clear this array as it may messes with the DOM.
+        for (const parent of this.renderedElements) {
+            if (this.engine.isDescendant(parent, element)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

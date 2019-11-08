@@ -1,5 +1,7 @@
 
 export interface IComponent {
-    selector: string,
-    render: Function
+    selector: string;
+    // tslint:disable-next-line:ban-types
+    render: Function;
 }
+

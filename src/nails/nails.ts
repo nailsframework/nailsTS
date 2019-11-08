@@ -1,41 +1,42 @@
-'use strict';
-import { State } from './core/state';
-import { RenderingEngine } from './core/engine/engine'
-import { ComponentEngine } from './core/engine/componentEngine'
-import { Injector } from './core/injector';
+"use strict";
+import { ComponentEngine } from "./core/engine/componentEngine"
+import { RenderingEngine } from "./core/engine/engine"
+import { Injector } from "./core/injector";
+import { State } from "./core/state";
 
 
 class Factory {
-    create<T>(type: (new () => T)): T {
+    public create<T>(type: (new () => T)): T {
         return new type();
     }
 }
 // tslint:disable-next-line:max-classes-per-file
 export class Nails {
 
-    state: State;
-    engine: RenderingEngine
-    componentEngine: ComponentEngine
-    injector: Injector
+    public state: State;
+    public engine: RenderingEngine;
+    public componentEngine: ComponentEngine;
+    public injector: Injector;
 
     constructor(object: any) {
 
-        if (typeof object.methods.onInit !== 'undefined') {
+        this.state = new State();
+
+        if (typeof object.methods.onInit !== "undefined") {
             object.methods.onInit();
         }
-        this.state = new State();
-        if (object.hasOwnProperty('el')) {
+        if (object.hasOwnProperty("el")) {
             this.state.element = object.el;
         } else {
             console.error("NailsJS cannot be initalized, because no element was specified");
         }
-        if (object.hasOwnProperty('data')) {
+        if (object.hasOwnProperty("data")) {
             this.state.data = object.data;
         }
-        if (object.hasOwnProperty('methods')) {
+        if (object.hasOwnProperty("methods")) {
             this.state.methods = object.methods;
         }
-        if (typeof object.components === 'undefined') {
+        if (typeof object.components === "undefined") {
             this.state.components = [];
         } else {
             if (Array.isArray(object.components)) {
@@ -56,8 +57,8 @@ export class Nails {
         this.engine.setTitle();
         this.state.methods.getState = function () {
             return this.state;
-        }
-        if (typeof this.state.methods.onMounted !== 'undefined') {
+        };
+        if (typeof this.state.methods.onMounted !== "undefined") {
             this.state.methods.onMounted(this.state);
 
         }
@@ -65,51 +66,51 @@ export class Nails {
 
 
 
-    prepareInjector(arr: []) {
-        let factory = new Factory();
+    public prepareInjector(arr: []) {
+        const factory = new Factory();
         if (!Array.isArray(arr)) {
-            console.warn('Cannot iterate over declarations, since they are not an array');
+            console.warn("Cannot iterate over declarations, since they are not an array");
             return;
         }
-        for (let d of arr) {
-            let instance = factory.create(d);
+        for (const d of arr) {
+            const instance = factory.create(d);
             this.injector.insert(instance);
         }
     }
-    notifyDOM(target: any, prop: any, value: string) {
+    public notifyDOM(target: any, prop: any, value: string) {
 
-        var refs = this.state.findElementsByObject(target, prop);
+        const refs = this.state.findElementsByObject(target, prop);
         if (refs === [] || refs.length === 0) {
             return;
-        };
-        for (var ref of refs) {
+        }
+        for (const ref of refs) {
             this.engine.updateInterpolatedElement(ref.element, ref.content);
             this.engine.executeDirectivesOnElement(ref.element, false);
         }
 
         return true;
-    };
+    }
 
-    setUpProxy() {
-        var handler = {
+    public setUpProxy() {
+        const handler = {
             state: this.state,
             notifyDom: this.notifyDOM,
             engine: this.engine,
 
-            get: function (target: any, prop: any, receiver: any) {
+            get(target: any, prop: any, receiver: any) {
                 return target[prop];
 
             },
             set(target: any, prop: any, value: string) {
                 target[prop] = value;
-                this.notifyDom(target, prop, '');
+                this.notifyDom(target, prop, "");
                 return true;
-            }
+            },
         };
 
-        var proxy = new Proxy(this.state.data, handler);
+        const proxy = new Proxy(this.state.data, handler);
         this.state.data = proxy;
-    };
+    }
 
 
 

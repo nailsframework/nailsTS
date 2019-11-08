@@ -1,3 +1,3 @@
 export interface IStateData {
-    title: string,
+    title: string;
 }
