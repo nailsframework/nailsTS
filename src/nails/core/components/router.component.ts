@@ -1,5 +1,5 @@
-import { State } from "../state";
-import { ComponentEngine } from "../componentEngine";
+import { State } from "../../state";
+import { ComponentEngine } from "../../componentEngine";
 
 export class Router {
     state: State

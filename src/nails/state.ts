@@ -2,7 +2,7 @@
 import { ActiveElement } from "./classes/ActiveElement";
 import { ComponentEngine } from "./componentEngine";
 import { Injector } from "./core/injector";
-import { Router } from "./coreComponents/router.component";
+import { Router } from "./core/components/router.component";
 import { RenderingEngine } from "./engine";
 import { IActiveElement } from "./interfaces/ActiveElement";
 

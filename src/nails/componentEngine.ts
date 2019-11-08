@@ -1,4 +1,4 @@
-import { Router } from './coreComponents/router.component';
+import { Router } from './core/components/router.component';
 import { RenderingEngine } from './engine';
 import { Nails } from './nails';
 import { State } from './state';

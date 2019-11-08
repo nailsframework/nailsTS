@@ -3,7 +3,7 @@ import { NavbarComponent } from "./components/navbar.component";
 // tslint:disable-next-line: ordered-imports
 import { ShowcaseComponent } from "./components/showcase.component";
 import { Greeter } from "./modules/injectme.module";
-import { Router } from "./nails/coreComponents/router.component";
+import { Router } from "./nails/core/components/router.component";
 import { Nails } from "./nails/nails"
 import { State } from "./nails/state";
 
