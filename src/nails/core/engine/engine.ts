@@ -1,7 +1,7 @@
 "use strict";
-import { ActiveElement } from "../classes/ActiveElement";
-import { NailsDirectives } from "../directiveDefinitions";
-import { State } from "./state";
+import { ActiveElement } from "../../classes/ActiveElement";
+import { NailsDirectives } from "../../directiveDefinitions";
+import { State } from "../state";
 export class RenderingEngine {
 
     public state: State;

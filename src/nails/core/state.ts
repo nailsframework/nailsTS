@@ -1,9 +1,9 @@
 "use strict";
 import { ActiveElement } from "../classes/ActiveElement";
-import { ComponentEngine } from "../componentEngine";
+import { ComponentEngine } from "./engine/componentEngine";
 import { Injector } from "../core/injector";
 import { Router } from "../core/components/router.component";
-import { RenderingEngine } from "./engine";
+import { RenderingEngine } from "./engine/engine";
 import { IActiveElement } from "../interfaces/ActiveElement";
 
 export class State {
