@@ -67,14 +67,14 @@ export class NailsDirectives {
         function interpolateCustomElement(element: HTMLElement, object: any, descriptor: any) {
             // Performancewise, we render the whole html element.
             let html = element.innerHTML;
-            let interpolations = engine.getInterpolationsForTextContent(html);
-            for (let interpolation of interpolations) {
+            const interpolations = engine.getInterpolationsForTextContent(html);
+            for (const interpolation of interpolations) {
                 let stripped = engine.stripAndTrimInterpolation(interpolation);
-                let args = stripped.split(".");
+                const args = stripped.split(".");
                 args[0] = "";
                 stripped = "";
-                for (let arg of args) {
-                    stripped += arg + "."
+                for (const arg of args) {
+                    stripped += arg + ".";
                 }
                 stripped = stripped.substring(0, stripped.length - 1);
 
@@ -89,22 +89,22 @@ export class NailsDirectives {
             element.innerHTML = html;
 
         }
-        let descriptor = statemenet.split(" ")[1];
-        let arr = statemenet.split(" ")[3];
-        let refArray = eval("state.data." + arr);
+        const descriptor = statemenet.split(" ")[1];
+        const arr = statemenet.split(" ")[3];
+        const refArray = eval("state.data." + arr);
         if (typeof refArray === "undefined" || refArray === null) { return; }
 
-        let parent = element.parentNode;
-        for (let i of refArray) {
-            let child = document.createElement(element.nodeName);
+        const parent = element.parentNode;
+        for (const i of refArray) {
+            const child = document.createElement(element.nodeName);
             child.innerHTML = element.innerHTML;
             interpolateCustomElement(child, i, descriptor);
             parent.appendChild(child);
             engine.disableInterpolationForVariableNameOnElement(statemenet.split(" ")[1], child);
 
-            for (const i of element.attributes) {
-                if (i.name !== "n-for" && i.name !== "style") {
-                    child.setAttribute(i.name, i.value);
+            for (const attr of element.attributes) {
+                if (attr.name !== "n-for" && attr.name !== "style") {
+                    child.setAttribute(attr.name, attr.value);
                 }
             }
             const componentEngine = new ComponentEngine(state, engine, null, null);
