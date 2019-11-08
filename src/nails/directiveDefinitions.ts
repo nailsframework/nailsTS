@@ -9,7 +9,7 @@ export class NailsDirectives {
         this.directives = ["if", "form", "for", "click"];
     }
     /*
-        A directive exists of an element (string) in the @directives array and a function declaration
+        A directive consists of an element (string) in the @directives array and a function declaration
         below.
         directive and function need to have the same name
         sample body:
