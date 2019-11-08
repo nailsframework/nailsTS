@@ -1,10 +1,10 @@
 "use strict";
 import { ActiveElement } from "../classes/ActiveElement";
-import { ComponentEngine } from "./engine/componentEngine";
-import { Injector } from "../core/injector";
 import { Router } from "../core/components/router.component";
-import { RenderingEngine } from "./engine/engine";
+import { Injector } from "../core/injector";
 import { IActiveElement } from "../interfaces/ActiveElement";
+import { ComponentEngine } from "./engine/componentEngine";
+import { RenderingEngine } from "./engine/engine";
 
 export class State {
     public instance: State;
@@ -44,7 +44,7 @@ export class State {
     }
     public addActiveDirectiveElement(key: string, statement: string, element: HTMLElement) {
 
-        for (let el of this.activeDirectiveElements) {
+        for (const el of this.activeDirectiveElements) {
             if (el.key === key && el.statement === statement && el.element === element) {
                 console.warn("refusing to insert element");
                 return;
@@ -58,8 +58,8 @@ export class State {
 
     }
 
-    public updateElementRefByObject(object: Object, ref: HTMLElement) {
-        for (let element of this.activeElements) {
+    public updateElementRefByObject(object: any, ref: HTMLElement) {
+        for (const element of this.activeElements) {
             if (element.element === ref) {
                 element.reference = object;
             }
@@ -72,7 +72,7 @@ export class State {
     }
 
     public findElementByRef(ref: HTMLElement) {
-        for (let element of this.activeElements) {
+        for (const element of this.activeElements) {
             if (element.reference === ref) { return element; }
         }
     }
@@ -90,17 +90,17 @@ export class State {
 
     public disableElementIfNeeded(element: HTMLElement) {
         if ("getAttribute" in element) {
-            let statement = element.getAttribute("n-for");
+            const statement = element.getAttribute("n-for");
             if (statement === null) { return; }
-            let statementSplit = statement.split(" ");
-            let name = statementSplit[1]; // var name of array
+            const statementSplit = statement.split(" ");
+            const name = statementSplit[1]; // var name of array
             this.engine.disableInterpolationForVariableNameOnElement(name, element);
         }
 
     }
     public findElementsByObject(obj: any, prop: string) {
-        let elements = [];
-        for (let element of this.activeElements) {
+        const elements = [];
+        for (const element of this.activeElements) {
             if (this.stripAndTrimInterpolation(element.interpolation) === prop) {
                 elements.push(element);
             }
