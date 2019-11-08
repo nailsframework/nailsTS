@@ -6,7 +6,7 @@ export class NailsDirectives {
 
     public directives: any;
     constructor() {
-        this.directives = ["if", "form", "for", "click"];
+        this.directives = ["if", "form", "for", "click", "change"];
     }
     /*
         A directive consists of an element (string) in the @directives array and a function declaration
@@ -37,9 +37,12 @@ export class NailsDirectives {
             eval("state.methods." + statement);
         };
         element.onclick = callback;
-
-
-
+    }
+    public change(element: HTMLInputElement, statement: string, state: State) {
+        const callback = () => {
+            eval("state.methods." + statement + '(' + element.value + ')');
+        };
+        element.onchange = callback;
     }
     public form(element: HTMLElement, statement: string, state: State) {
         if (element.getAttribute("type") === "text") {

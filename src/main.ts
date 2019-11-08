@@ -16,6 +16,8 @@ const nails = new Nails({
     data: {
         title: "Your Nails App",
         whoami: "NailsJS",
+        count: 0,
+        toggled: true,
         sample: [
             { name: "Jill", lastname: "smith" },
             { name: "Ingo", lastname: "Meyers" },
@@ -31,6 +33,13 @@ const nails = new Nails({
         onMounted(currentState: State) {
             currentState.data.headers = [{ "Test": "Value" }];
         },
+        toggle() {
+            // nails.state.data.toggled = !nails.state.data.toggled;
+            ++nails.state.data.count;
+        },
+        change(val: string) {
+            nails.state.data.value = val;
+        }
 
     },
     components: [
