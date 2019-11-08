@@ -1,8 +1,8 @@
 "use strict";
 import { ENGINE_METHOD_DIGESTS } from "constants";
 import { ComponentEngine } from "./componentEngine";
-import { RenderingEngine } from "./engine";
-import { State } from "./state";
+import { RenderingEngine } from "./core/engine";
+import { State } from "./core/state";
 export class NailsDirectives {
 
     public directives: any;

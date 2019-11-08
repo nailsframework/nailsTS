@@ -1,6 +1,6 @@
 'use strict';
-import { State } from './state';
-import { RenderingEngine } from './engine'
+import { State } from './core/state';
+import { RenderingEngine } from './core/engine'
 import { ComponentEngine } from './componentEngine'
 import { Injector } from './core/injector';
 

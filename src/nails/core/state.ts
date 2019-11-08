@@ -1,10 +1,10 @@
 "use strict";
-import { ActiveElement } from "./classes/ActiveElement";
-import { ComponentEngine } from "./componentEngine";
-import { Injector } from "./core/injector";
-import { Router } from "./core/components/router.component";
+import { ActiveElement } from "../classes/ActiveElement";
+import { ComponentEngine } from "../componentEngine";
+import { Injector } from "../core/injector";
+import { Router } from "../core/components/router.component";
 import { RenderingEngine } from "./engine";
-import { IActiveElement } from "./interfaces/ActiveElement";
+import { IActiveElement } from "../interfaces/ActiveElement";
 
 export class State {
     public instance: State;

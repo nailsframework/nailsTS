@@ -1,4 +1,4 @@
-import { State } from "../state";
+import { State } from "../core/state";
 
 export class Injector {
     state: State
@@ -8,7 +8,7 @@ export class Injector {
         this.bootstrap();
     }
     bootstrap() {
-       this.state.injectors = [];
+        this.state.injectors = [];
     }
 
     insert(clazz: any) {

@@ -5,7 +5,7 @@ import { ShowcaseComponent } from "./components/showcase.component";
 import { Greeter } from "./modules/injectme.module";
 import { Router } from "./nails/core/components/router.component";
 import { Nails } from "./nails/nails"
-import { State } from "./nails/state";
+import { State } from "./nails/core/state";
 
 
 

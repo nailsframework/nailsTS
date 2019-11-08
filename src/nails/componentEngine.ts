@@ -1,7 +1,7 @@
 import { Router } from './core/components/router.component';
-import { RenderingEngine } from './engine';
+import { RenderingEngine } from './core/engine';
 import { Nails } from './nails';
-import { State } from './state';
+import { State } from './core/state';
 
 
 export class ComponentEngine {

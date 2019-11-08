@@ -1,4 +1,4 @@
-import { State } from "./state";
+import { State } from "./core/state";
 
 var get = function (url: string, state: State, callback: Function) {
     var xmlHttp = new XMLHttpRequest();

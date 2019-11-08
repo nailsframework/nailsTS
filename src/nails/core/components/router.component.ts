@@ -1,4 +1,4 @@
-import { State } from "../../state";
+import { State } from "../state";
 import { ComponentEngine } from "../../componentEngine";
 
 export class Router {
