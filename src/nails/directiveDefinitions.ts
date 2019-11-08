@@ -47,7 +47,7 @@ export class NailsDirectives {
                 state.data[statement] = element.innerText;
             }
         }
-        element.addEventListener("input", function () {
+        element.addEventListener("input", () => {
             if (state.data[statement] !== element.innerText) {
                 state.data[statement] = element.innerText;
 
