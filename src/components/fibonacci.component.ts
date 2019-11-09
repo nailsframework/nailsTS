@@ -16,11 +16,15 @@ export class FibonacciComponent implements IComponent {
         fib.index = index;
         return fib.calculateFibonacciNumber();
     }
-    public async updateFibonacciNumber() {
-        this.state.data.fib = "Calculating..";
-        this.findFibonacciOf(this.state.data.fibNumber).then((val: string) => {
+    public async setStatus(status: string): Promise<void> {
+        this.state.data.fib = status;
+    }
+    public async updateFibonacciNumber(): Promise<void> {
+        await this.setStatus("Calculating");
+        await this.findFibonacciOf(this.state.data.fibNumber).then((val: string) => {
             this.state.data.fib = val;
         });
+        return null;
     }
 
     public render() {
