@@ -5,7 +5,7 @@ export class ShowcaseComponent implements IComponent {
     state: State
     selector: string
 
-    constructor(state: string) {
+    constructor(state: State) {
         this.selector = 'showcase';
     }
 
