@@ -31,7 +31,7 @@
     "webpack-dev-server": "^3.9.0"
   },
   "dependencies": {
-    "@nailsframework/nails": "^1.0.7",
+    "@nailsframework/nails": "^1.0.8",
     "awesome-typescript-loader": "^5.2.1",
     "install": "^0.13.0",
     "source-map-loader": "^0.2.4",
