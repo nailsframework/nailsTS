@@ -1,5 +1,5 @@
-import { State } from "../nails/core/state";
-import { IComponent } from "../nails/interfaces/Component";
+import { IComponent } from "@nailsframework/nails/lib/interfaces/Component";
+import { State } from "@nailsframework/nails/lib/core/state";
 
 export class NavbarComponent implements IComponent {
   state: State

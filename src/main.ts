@@ -4,10 +4,10 @@ import { NavbarComponent } from "./components/navbar.component";
 // tslint:disable-next-line: ordered-imports
 import { ShowcaseComponent } from "./components/showcase.component";
 import { Greeter } from "./modules/injectme.module";
-import { Router } from "./nails/core/components/router.component";
-import { State } from "./nails/core/state";
-import { Nails } from "./nails/nails";
 import { FibonacciComponent } from "./components/fibonacci.component";
+import { Nails } from "@nailsframework/nails";
+import { State } from "@nailsframework/nails/lib/core/state";
+import { Router } from "@nailsframework/nails/lib/core/components/router.component";
 
 
 const nails = new Nails({

@@ -1,6 +1,6 @@
 import { Greeter } from "../modules/injectme.module";
-import { State } from "../nails/core/state";
-import { IComponent } from "../nails/interfaces/Component";
+import { State } from "@nailsframework/nails/lib/core/state";
+import { IComponent } from "@nailsframework/nails/lib/interfaces/Component";
 
 export class LoginComponent implements IComponent {
   public state: State;

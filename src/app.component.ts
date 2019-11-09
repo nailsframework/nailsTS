@@ -1,7 +1,7 @@
+import { IComponent } from "@nailsframework/nails/lib/interfaces/Component";
+import { State } from "@nailsframework/nails/lib/core/state";
 
 
-import { State } from "./nails/core/state";
-import { IComponent } from "./nails/interfaces/Component";
 
 export class AppComponent implements IComponent {
     public selector: string;

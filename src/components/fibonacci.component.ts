@@ -1,6 +1,6 @@
 import { Fibonacci } from "../modules/fibonacci.module";
-import { State } from "../nails/core/state";
-import { IComponent } from "../nails/interfaces/Component";
+import { State } from "@nailsframework/nails/lib/core/state";
+import { IComponent } from "@nailsframework/nails/lib/interfaces/Component";
 
 export class FibonacciComponent implements IComponent {
     public selector: string;
@@ -33,6 +33,7 @@ export class FibonacciComponent implements IComponent {
             <input type="text" placeholder="Number" n-form="fibNumber">
             <button n-click='updateFibonacciNumber()'>Calculate</button>
             <p>Calculated Number is: {{fib}}<p>
+            <p>Seed: {{seed}}</p>
         </div>
         `;
     }
