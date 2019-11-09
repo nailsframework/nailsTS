@@ -6,7 +6,7 @@
   "scripts": {
     "test": "webpack --config production.config.js",
     "start": "webpack-dev-server",
-    "build": "rm -rf ./dist && webpack --config production.config.js &&  cp -r ./src/* dist/ && find ./dist -name '*.ts' -type f -delete && rm -rf ./tmp"
+    "build": "rm -rf ./dist && webpack --config production.config.js &&  cp -r ./src/* dist/ && find ./dist -name '*.ts' -type f -delete && rm -rf ./tmp && find ./dist/ -type d -empty -delete"
   },
   "repository": {
     "type": "git",
