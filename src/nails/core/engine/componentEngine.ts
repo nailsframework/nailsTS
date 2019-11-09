@@ -1,8 +1,10 @@
+import { Instance } from "../../classes/Instance";
+import { IComponent } from "../../interfaces/Component";
 import { Nails } from "../../nails";
 import { Router } from "../components/router.component";
+import { Guid } from "../math/Guid";
 import { State } from "../state";
 import { RenderingEngine } from "./engine";
-
 
 export class ComponentEngine {
     public state: State;
@@ -52,6 +54,36 @@ export class ComponentEngine {
         this.engine.executeDirectivesOnElement(element, true);
 
     }
+
+    public getInstanceOfElementOrNull(element: HTMLElement): any {
+        while (element.parentElement != null) {
+            if (this.engine.elementCanGetAttribute(element)) {
+                if (element.hasAttribute("element-guid")) {
+                    return this.getInstanceFromInstanceId(element.getAttribute("element-guid"));
+                }
+            }
+            element = element.parentElement;
+        }
+    }
+    public setInstanceIdOnElement(element: HTMLElement, component: IComponent): any {
+        const guid = Guid.newGuid();
+        element.setAttribute("element-guid", guid);
+        this.state.instances.push(new Instance(guid, component));
+        return guid;
+    }
+
+    public getInstanceFromInstanceId(instanceId: string): any {
+        const foundInstances = this.state.instances.filter((instance: Instance) => {
+            if (instance.getIdentifier() === instanceId) {
+                return instance;
+            }
+        });
+        if (foundInstances.length === 0) {
+            return null;
+        }
+        return foundInstances.pop();
+    }
+
     // tslint:disable-next-line:member-ordering
     public renderComponents(exclude?: HTMLElement) {
         this.injectComponents();
@@ -75,12 +107,11 @@ export class ComponentEngine {
                         if (componentHTML.includes("<" + component.selector + ">")) {
                             continue;
                         }
+                        this.setInstanceIdOnElement(element, component);
                         element.innerHTML = componentHTML;
 
                         // this.engine.executeInerpolationsOnElement(element);
                         // this.traverseElementAndExecuteDirectives(element);
-
-
 
                     }
                     newHtml = document.body.innerHTML;
@@ -143,7 +174,6 @@ export class ComponentEngine {
             }
         }
     }
-
 
     public recreateAllComponents() {
         this.renderComponents();

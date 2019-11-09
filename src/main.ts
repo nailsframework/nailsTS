@@ -1,13 +1,13 @@
-import { LoginComponent } from "./components/login.component"
+import { AppComponent } from "./app.component";
+import { LoginComponent } from "./components/login.component";
 import { NavbarComponent } from "./components/navbar.component";
 // tslint:disable-next-line: ordered-imports
 import { ShowcaseComponent } from "./components/showcase.component";
 import { Greeter } from "./modules/injectme.module";
 import { Router } from "./nails/core/components/router.component";
-import { Nails } from "./nails/nails"
 import { State } from "./nails/core/state";
-
-
+import { Nails } from "./nails/nails";
+import { FibonacciComponent } from "./components/fibonacci.component";
 
 
 const nails = new Nails({
@@ -29,16 +29,22 @@ const nails = new Nails({
             // You may use this, to trigger your own scripts. Beware, that the dom is not rendered at this time, so use OnMounted for any DOM operations.
         },
         onMounted(currentState: State) {
-            currentState.data.headers = [{ "Test": "Value" }];
+            currentState.data.headers = [{ Test: "Value" }];
         },
     },
     components: [
         LoginComponent, Router, ShowcaseComponent, NavbarComponent,
+        AppComponent, FibonacciComponent,
     ],
     routings: [{
         component: LoginComponent,
         route: "login",
-    }],
+    },
+    {
+        component: FibonacciComponent,
+        route: "fib",
+    }
+    ],
     declarations: [
         Greeter,
     ],

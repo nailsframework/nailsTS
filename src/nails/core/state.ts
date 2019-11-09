@@ -5,6 +5,7 @@ import { Injector } from "../core/injector";
 import { IActiveElement } from "../interfaces/ActiveElement";
 import { ComponentEngine } from "./engine/componentEngine";
 import { RenderingEngine } from "./engine/engine";
+import { Instance } from "../classes/Instance";
 
 export class State {
     public instance: State;
@@ -22,6 +23,7 @@ export class State {
     public router: Router;
     public click: any = {};
     public injectors: any[];
+    public instances: Instance[] = [];
     constructor() {
         this.data = {};
         this.activeElements = [];

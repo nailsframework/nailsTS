@@ -2,6 +2,7 @@
 import { ComponentEngine } from "./core/engine/componentEngine";
 import { RenderingEngine } from "./core/engine/engine";
 import { State } from "./core/state";
+import { Instance } from "./classes/Instance";
 export class NailsDirectives {
 
     public directives: any;
@@ -30,10 +31,17 @@ export class NailsDirectives {
     */
 
     public click(element: HTMLElement, statement: string, state: State) {
+        const componentEngine = new ComponentEngine(state, new RenderingEngine(state), null, []);
+
         if (!state.click) {
             state.click.callbacks = [];
         }
         const callback = () => {
+            const context = componentEngine.getInstanceOfElementOrNull(element) as Instance;
+            if (context !== null) {
+                eval('context.getComponent().' + statement);
+                return;
+            }
             eval("state.methods." + statement);
         };
         element.onclick = callback;
@@ -44,15 +52,15 @@ export class NailsDirectives {
         };
         element.onchange = callback;
     }
-    public form(element: HTMLElement, statement: string, state: State) {
+    public form(element: HTMLInputElement, statement: string, state: State) {
         if (element.getAttribute("type") === "text") {
-            if (state.data[statement] !== element.innerText) {
-                state.data[statement] = element.innerText;
+            if (state.data[statement] !== element.value) {
+                state.data[statement] = element.value;
             }
         }
         element.addEventListener("input", () => {
-            if (state.data[statement] !== element.innerText) {
-                state.data[statement] = element.innerText;
+            if (state.data[statement] !== element.value) {
+                state.data[statement] = element.value;
 
             }
         });
