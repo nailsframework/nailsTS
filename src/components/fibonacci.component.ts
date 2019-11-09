@@ -28,7 +28,7 @@ export class FibonacciComponent implements IComponent {
         return `
         <div>
             <input type="text" placeholder="Number" n-form="fibNumber">
-            <button n-click='updateFibonacciNumber()'>Find</button>
+            <button n-click='updateFibonacciNumber()'>Calculate</button>
             <p>Calculated Number is: {{fib}}<p>
         </div>
       `;
