@@ -3,30 +3,30 @@ import { State } from "../nails/core/state";
 import { IComponent } from "../nails/interfaces/Component";
 
 export class LoginComponent implements IComponent {
-  state: State;
-  selector: string;
-  i: number;
-  greeter: Greeter;
+  public state: State;
+  public selector: string;
+  public i: number;
+  public greeter: Greeter;
   constructor(state: State) {
     this.state = state;
-    this.selector = 'login'
+    this.selector = "login";
     this.i = 0;
-    this.greeter = this.state.injector.resolve(Greeter)
+    this.greeter = this.state.injector.resolve(Greeter);
   }
-  incrementCounter() {
+  public incrementCounter() {
     this.i++;
     return this.i;
   }
 
-  render() {
+  public render() {
     /*html*/
 
     return `
         <div>
           <input type="text" placeholder="Username ">
           <input type="text" placeholder="Username">
-          ${this.greeter.greet('Dominic')}
+          ${this.greeter.greet("Dominic")}
         </div>
-      `
+      `;
   }
 }

@@ -1,13 +1,12 @@
-import { Greeter } from "../modules/injectme.module";
+import { Fibonacci } from "../modules/fibonacci.module";
 import { State } from "../nails/core/state";
 import { IComponent } from "../nails/interfaces/Component";
-import { Fibonacci } from "../modules/fibonacci.module";
 
 export class FibonacciComponent implements IComponent {
     public selector: string;
     constructor(public state: State) {
         this.state = state;
-        this.selector = 'fibonacci'
+        this.selector = "fibonacci";
         this.state.data.fibNumber = 10;
         this.updateFibonacciNumber();
     }
@@ -35,6 +34,6 @@ export class FibonacciComponent implements IComponent {
             <button n-click='updateFibonacciNumber()'>Calculate</button>
             <p>Calculated Number is: {{fib}}<p>
         </div>
-      `;
+        `;
     }
 }

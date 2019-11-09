@@ -1,6 +1,6 @@
 
 export class Fibonacci {
-    index: number;
+    public index: number;
 
     public calculateFibonacciNumber() {
         return this.calculate(this.index);
