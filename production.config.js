@@ -7,14 +7,12 @@ module.exports = {
     contentBase: './src/'
   },
   module: {
-
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
-      },
-    ],
+    rules: [{
+      // Include ts, tsx, js, and jsx files.
+      test: /\.(ts|js)x?$/,
+      exclude: /node_modules/,
+      loader: 'babel-loader',
+    }],
   },
 
   resolve: {
