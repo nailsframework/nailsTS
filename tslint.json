@@ -1,12 +1,12 @@
 {
-    "extends": "tslint:recommended",
+    "extends": "tslint-clean-code",
     "rules": {
         "max-line-length": {
             "options": [
                 120
             ]
         },
-        "quotemark": "single",
+        "quotes": "single",
         "new-parens": true,
         "no-arg": true,
         "no-bitwise": true,

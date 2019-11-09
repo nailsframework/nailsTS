@@ -24,6 +24,7 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "ts-loader": "^6.2.1",
+    "tslint-clean-code": "^0.2.10",
     "typescript": "^3.6.4",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.9",

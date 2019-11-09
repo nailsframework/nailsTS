@@ -9,7 +9,7 @@ export class LoginComponent implements IComponent {
   public greeter: Greeter;
   constructor(state: State) {
     this.state = state;
-    this.selector = "login";
+    this.selector = 'login';
     this.i = 0;
     this.greeter = this.state.injector.resolve(Greeter);
   }
