@@ -4,7 +4,7 @@ import { NavbarComponent } from "./components/navbar.component";
 // tslint:disable-next-line: ordered-imports
 import { ShowcaseComponent } from "./components/showcase.component";
 import { Greeter } from "./modules/injectme.module";
-// import { FibonacciComponent } from "./components/fibonacci.component";
+import { FibonacciComponent } from "./components/fibonacci.component";
 import { Nails } from "@nailsframework/nails";
 import { State } from "@nailsframework/nails/lib/core/state";
 import { Router } from "@nailsframework/nails/lib/core/components/router.component";
@@ -34,13 +34,16 @@ const nails = new Nails({
     },
     components: [
         LoginComponent, Router, ShowcaseComponent, NavbarComponent,
-        AppComponent, // FibonacciComponent,
+        AppComponent, FibonacciComponent,
     ],
     routings: [{
         component: LoginComponent,
         route: "login",
     },
-
+    {
+        component: FibonacciComponent,
+        route: "fib",
+    }
     ],
     declarations: [
         Greeter,
