@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.7.2",
-    "@nailsframework/nails": "^1.1.0",
+    "@nailsframework/nails": "^1.1.7",
     "awesome-typescript-loader": "^5.2.1",
     "install": "^0.13.0",
     "source-map-loader": "^0.2.4",
