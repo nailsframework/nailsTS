@@ -1,11 +1,11 @@
-import { IComponent } from "@nailsframework/nails/lib/interfaces/Component";
 import { State } from "@nailsframework/nails/lib/core/state";
+import { CoreComponent } from "@nailsframework/nails/lib/core/components/core.component";
 
 
-
-export class AppComponent implements IComponent {
+export class AppComponent extends CoreComponent {
     public selector: string;
     constructor(public state: State) {
+        super(state);
         this.selector = "App";
     }
 
