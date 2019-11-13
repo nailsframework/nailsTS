@@ -33,8 +33,7 @@ const nails = new Nails({
         },
     },
     components: [
-        LoginComponent, Router, ShowcaseComponent, NavbarComponent,
-        AppComponent, FibonacciComponent,
+        LoginComponent, Router, AppComponent, LoginComponent
     ],
     routings: [{
         component: LoginComponent,

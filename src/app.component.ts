@@ -4,15 +4,17 @@ import { CoreComponent } from "@nailsframework/nails/lib/core/components/core.co
 
 export class AppComponent extends CoreComponent {
     public selector: string;
+    public sven: string = '';
     constructor(public state: State) {
         super(state);
-        this.selector = "App";
+        this.selector = "app";
     }
 
     public render() {
         /*html */
         return `
         <body>
+            <p>{{sven}}</p>
             <div class="image-container bounceInUp animated">
             <img src='assets/logo.png' height="400" width="400">
             </div>
@@ -22,6 +24,7 @@ export class AppComponent extends CoreComponent {
         <footer>
             Make Web Developement faster and less painful. Get startet today with {{ whoami }}
         </footer>
+        <n-content select="lappe"></n-content>
         `;
     }
 
