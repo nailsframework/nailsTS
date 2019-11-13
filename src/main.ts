@@ -20,6 +20,8 @@ const nails = new Nails({
             { name: "Jill", lastname: "smith" },
             { name: "Ingo", lastname: "Meyers" },
         ],
+        array: [1, 2, 3, 4]
+
     },
     methods: {
         onInit() {
