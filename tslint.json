@@ -6,6 +6,8 @@
                 120
             ]
         },
+        "no-unused-variable": true,
+        "no-unused-expression": true,
         "quotes": "single",
         "new-parens": true,
         "no-arg": true,

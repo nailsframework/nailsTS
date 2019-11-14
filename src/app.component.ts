@@ -4,7 +4,8 @@ import { CoreComponent } from "@nailsframework/nails/lib/core/components/core.co
 
 export class AppComponent extends CoreComponent {
     public selector: string;
-    public sven: string = '';
+    public sven: string;
+    public arr: any = [1, 2, 3, 5];
 
     constructor(public state: State) {
         super(state);
@@ -15,6 +16,9 @@ export class AppComponent extends CoreComponent {
         /*html */
         return `
         <body>
+            <p n-for="let a of arr">
+                {{a}}
+            </p>
             <div class="image-container bounceInUp animated">
             <img src='assets/logo.png' height="400" width="400">
             </div>
